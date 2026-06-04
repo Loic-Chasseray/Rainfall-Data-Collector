@@ -7,6 +7,7 @@ function parseCSV(text)
     const rows = []
     for (const line of lines.slice(1)) // slice(1) skips the header of the csv
     {
+        if (!line.includes(",") continue
         const [timestamp, rainfall] = line.split(",")
         rows.push({ timestamp: timestamp.trim(), rainfall: rainfall.trim() })
     }
