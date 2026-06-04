@@ -42,7 +42,12 @@ async function fetchData()
 
 function merge(existingRows, newRows)
 {
-    const combined = existingRows.concat(newRows) // concatenates arrays
+    /*
+    new rows are favoured over existing rows because the loop checks the new rows
+    before the existing rows. this is important because data for the most recent timestamp
+    is often 0 but then updates if data is collected.
+    */
+    const combined = newRows.concat(existingRows)
     const seen = new Set()
     const deduped = [] // deduped means deduplicated where duplicate data has been removed
     for (const row of combined)
