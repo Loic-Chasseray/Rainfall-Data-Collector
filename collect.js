@@ -27,12 +27,31 @@ async function fetchData()
     return parseCSV(text)
 }
 
+function merge(existingRows, newRows)
+{
+    const combined = existingRows.concat(newRows) // concatenates arrays
+    const seen = new Set()
+    const deduped = [] // deduped means deduplicated where duplicate data has been removed
+    for (const row of combined)
+    {
+        if (!seen.has(row.timestamp))
+        {
+            seen.add(row.timestamp)
+            deduped.push(row)
+        }
+    }
+    deduped.sort((a, b) => a.timestamp.localeCompare(b.timestamp)) // sort by oldest to newest dates
+    return deduped
+}
+
 async function main()
 {
     const newRows = await fetchData()
     const existingRows = loadMaster()
+    const mergedRows = merge(existingRows, newRows)
     console.log("New rows:", newRows.length)
     console.log("Existing rows:", existingRows.length)
+    console.log("Merged rows:", mergedRows.length)
 }
 
 main()
