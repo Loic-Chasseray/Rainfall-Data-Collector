@@ -1,0 +1,23 @@
+name: Collect Data
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run collection script
+        run: node collect.js
+
+      - name: Save updated CSV back to repo
+        run: |
+          git config user.email "bot@example.com"
+          git config user.name "Data Bot"
+          git add master.csv
+          git commit -m "Daily data update" || echo "No changes"
+          git push
