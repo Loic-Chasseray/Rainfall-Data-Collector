@@ -14,6 +14,19 @@ function parseCSV(text)
     return rows
 }
 
+function saveCSV(rows)
+{
+    const header = "Timestamp (UTC),Rainfall (mm)"
+    const lines = [header]
+    for (const row of rows)
+    {
+        const line = row.timestamp + "," + row.rainfall
+        lines.push(line)
+    }
+    const text = lines.join("\n")
+    fs.writeFileSync("master.csv", text, "utf8")
+}
+
 function loadMaster()
 {
     const text = fs.readFileSync("master.csv", "utf8")
@@ -49,6 +62,7 @@ async function main()
     const newRows = await fetchData()
     const existingRows = loadMaster()
     const mergedRows = merge(existingRows, newRows)
+    saveCSV(mergedRows)
     console.log("New rows:", newRows.length)
     console.log("Existing rows:", existingRows.length)
     console.log("Merged rows:", mergedRows.length)
