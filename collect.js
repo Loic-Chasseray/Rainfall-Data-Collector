@@ -1,3 +1,4 @@
+const fs = require("fs") // fs is short for filesystem
 const url = "https://check-for-flooding.service.gov.uk/rainfall-station-csv/286392TP"
 
 function parseCSV(text)
@@ -12,12 +13,24 @@ function parseCSV(text)
     return rows
 }
 
-async function main()
+function loadMaster()
+{
+    const text = fs.readFileSync("master.csv", "utf8")
+    return parseCSV(text)
+}
+
+async function fetchData()
 {
     const response = await fetch(url)
     const text = await response.text()
-    const rows = parseCSV(text)
-    console.log(rows)
+    return parseCSV(text)
+}
+
+async function main()
+{
+    const newRows = await fetchData()
+    const existingRows = loadMaster()
+    console.log("New rows:")
 }
 
 main()
