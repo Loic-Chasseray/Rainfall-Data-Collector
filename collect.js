@@ -31,8 +31,8 @@ async function main()
 {
     const newRows = await fetchData()
     const existingRows = loadMaster()
-    console.log("New rows:, newRows.length")
-    console.log("Existing rows:, existingRows.length")
+    console.log("New rows:", newRows.length)
+    console.log("Existing rows:", existingRows.length)
 }
 
 main()
