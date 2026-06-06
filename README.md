@@ -1,5 +1,5 @@
 # Rainfall-Data-Collector
-Collects rainfall data daily from https://check-for-flooding.service.gov.uk/rainfall-station/286392TP into a single CSV.
+Collects rainfall data hourly from https://check-for-flooding.service.gov.uk/rainfall-station/286392TP into a single CSV.
 
 ## note to future self
 When I revisit this, take a look at the following websites:
